@@ -6,7 +6,7 @@ plugins {
 
 group = 'bgg'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+sourceCompatibility = '12'
 
 repositories {
 	mavenCentral()
@@ -19,6 +19,10 @@ dependencies {
 	}
 	// https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
 	compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
+	compile 'org.neo4j:neo4j-ogm-embedded-driver:3.2.4'//deve ser especificado pois foi separado do kernel
+	compile 'org.neo4j:neo4j:3.5.14'//ultima versao 4 da conflito com a lib lucene
+	// https://mvnrepository.com/artifact/org.projectlombok/lombok
+	compile group: 'org.projectlombok', name: 'lombok', version: '1.18.10'
 }
 
 test {

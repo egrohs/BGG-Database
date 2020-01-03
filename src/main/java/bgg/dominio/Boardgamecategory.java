@@ -1,6 +1,5 @@
 package bgg.dominio;
 
-import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
 
@@ -16,7 +15,6 @@ import lombok.EqualsAndHashCode;
 @JacksonXmlRootElement(localName = "boardgamecategory")
 public class Boardgamecategory {
 	@Id
-//	@GeneratedValue
 	Long objectid;
 	@JacksonXmlText
 	String boardgamecategory;

@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import bgg.dominio.Boardgame;
+import bgg.dominio.Boardgameartist;
 import bgg.dominio.Boardgamecategory;
 import bgg.dominio.Boardgamemechanic;
 import bgg.dominio.Boardgames;
@@ -35,8 +36,8 @@ class BggTests {
 
 	private List<Boardgame> load() {
 		XmlMapper mapper = new XmlMapper();
-		Boardgames bgs = null;
 		List<Boardgame> lbgs = new ArrayList<>();
+		Boardgames bgs = null;
 		Boardgame bg = null;
 		try {
 			mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
@@ -54,6 +55,9 @@ class BggTests {
 							System.out.println(m);
 						}
 						for (Boardgamecategory c : bg.getBoardgamecategory()) {
+							System.out.println(c);
+						}
+						for (Boardgameartist c : bg.getBoardgameartist()) {
 							System.out.println(c);
 						}
 					}

@@ -2,7 +2,6 @@ package bgg.dominio;
 
 import java.util.List;
 
-import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
@@ -25,6 +24,6 @@ public class Boardgamemechanic {
 	@JacksonXmlText
 	String boardgamemechanic;
 
-	@Relationship(type = "POSSUI")
-	private List<Boardgame> bg;
+//	@Relationship(type = "POSSUI")
+//	private List<Boardgame> bg;
 }

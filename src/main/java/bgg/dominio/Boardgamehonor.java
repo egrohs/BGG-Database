@@ -1,18 +1,21 @@
 package bgg.dominio;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
+import org.neo4j.ogm.annotation.Id;
+import org.neo4j.ogm.annotation.NodeEntity;
+
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlText;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-@XmlRootElement(name = "boardgamehonor")
-@XmlAccessorType(XmlAccessType.FIELD)
+@NodeEntity
+@EqualsAndHashCode(of = "objectid")
+@JacksonXmlRootElement(localName = "boardgamehonor")
 public class Boardgamehonor {
-	@XmlAttribute
-	int objectid;
-	@XmlAttribute
+	@Id
+	Long objectid;
+	@JacksonXmlText
 	String name;
 }

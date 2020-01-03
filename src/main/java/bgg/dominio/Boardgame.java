@@ -3,12 +3,11 @@ package bgg.dominio;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
-import org.neo4j.ogm.annotation.Relationship;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,48 +17,64 @@ import lombok.ToString;
 @NodeEntity
 @EqualsAndHashCode(of = "objectid")
 @ToString(of = { "objectid", "name" })
-//@JacksonXmlRootElement(localName = "boardgame")
-//@JsonDeserialize(as = Boardgame.class)
+@JacksonXmlRootElement(localName = "boardgame")
 public class Boardgame {
 	@Id
 //	@GeneratedValue
 	Long objectid;
-	// @XmlAttribute
+	// TODO busca o name <name primary="true"
 	String name;
-	// @XmlAttribute
 	int yearpublished;
-	// @XmlAttribute
 	int minplayers;
-	// @XmlAttribute
 	int maxplayers;
-	// @XmlAttribute
 	int playingtime;
-	// @XmlAttribute
 	int age;
-//	// @XmlAttribute
-//	String description;
-//	@XmlAttribute(name = "boardgamehonor")//, type = Boardgamehonor.class)
-//	List<Boardgameartist> honors = new ArrayList<Boardgameartist>();
-//	@XmlAttribute(name = "boardgameartist")//, type = Boardgameartist.class)
-//	List<Boardgameartist> artists = new ArrayList<Boardgameartist>();
+	String description;
+
 	@JacksonXmlElementWrapper(useWrapping = false)
-	// @JacksonXmlProperty(localName = "boardgamecategory")
-	List<Boardgamecategory> boardgamecategory;// = new ArrayList<>();
-	
+	List<Boardgamehonor> boardgamehonor;
+
+	public void setBoardgamehonor(List<Boardgamehonor> value) {
+		if (boardgamehonor == null) {
+			boardgamehonor = new ArrayList<Boardgamehonor>(value.size());
+		}
+		boardgamehonor.addAll(value);
+	}
+
+	@JacksonXmlElementWrapper(useWrapping = false)
+	List<Boardgamedesigner> boardgamedesigner;
+
+	public void setBoardgamedesigner(List<Boardgamedesigner> value) {
+		if (boardgamedesigner == null) {
+			boardgamedesigner = new ArrayList<Boardgamedesigner>(value.size());
+		}
+		boardgamedesigner.addAll(value);
+	}
+
+	@JacksonXmlElementWrapper(useWrapping = false)
+	List<Boardgameartist> boardgameartist;
+
+	public void setBboardgameartist(List<Boardgameartist> value) {
+		if (boardgameartist == null) {
+			boardgameartist = new ArrayList<Boardgameartist>(value.size());
+		}
+		boardgameartist.addAll(value);
+	}
+
+	@JacksonXmlElementWrapper(useWrapping = false)
+	List<Boardgamecategory> boardgamecategory;
+
+	// sets necessarios pra corrigir um bug? do jackson ao importar listas
+	// parcialmente (apenas os ultimos elementos).
 	public void setBoardgamecategory(List<Boardgamecategory> value) {
 		if (boardgamecategory == null) {
 			boardgamecategory = new ArrayList<Boardgamecategory>(value.size());
 		}
 		boardgamecategory.addAll(value);
 	}
-	
-//	@XmlAttribute(name = "boardgamedesigner")//, type = Boardgamedesigner.class)
-//	List<Boardgamedesigner> desigs = new ArrayList<Boardgamedesigner>();
 
-	//@Relationship(type = "POSSUI", direction = Relationship.INCOMING)
 	@JacksonXmlElementWrapper(useWrapping = false)
-	// @JacksonXmlProperty(localName = "boardgamemechanic")
-	List<Boardgamemechanic> boardgamemechanic;// = new ArrayList<>();
+	List<Boardgamemechanic> boardgamemechanic;
 
 	public void setBoardgamemechanic(List<Boardgamemechanic> value) {
 		if (boardgamemechanic == null) {

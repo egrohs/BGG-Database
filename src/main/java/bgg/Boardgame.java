@@ -7,13 +7,25 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.neo4j.ogm.annotation.GeneratedValue;
+import org.neo4j.ogm.annotation.Id;
+import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
+
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
 @XmlRootElement(name = "boardgame")
+@NodeEntity
+@EqualsAndHashCode(of = "objectid")
+@ToString(of = { "objectid", "name" })
 public class Boardgame {
+	@Id
+	@GeneratedValue
 	@XmlAttribute
-	int objectid;
+	Long objectid;
 	@XmlElement
 	String name;
 	@XmlElement
@@ -36,6 +48,8 @@ public class Boardgame {
 	List<Boardgamecategory> cats = new ArrayList<Boardgamecategory>();
 	@XmlElement(name = "boardgamedesigner", type = Boardgamedesigner.class)
 	List<Boardgamedesigner> desigs = new ArrayList<Boardgamedesigner>();
+	
+	@Relationship(type = "POSSUI", direction = Relationship.INCOMING)
 	@XmlElement(name = "boardgamemechanic", type = Boardgamemechanic.class)
 	List<Boardgamemechanic> mechs = new ArrayList<Boardgamemechanic>();
 

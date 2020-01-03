@@ -22,7 +22,13 @@ dependencies {
 	//'org.neo4j:neo4j-ogm-test:3.1.2'
 	compile 'org.neo4j:neo4j-ogm-embedded-driver:3.2.4'//deve ser especificado pois foi separado do kernel
 	compile 'org.neo4j:neo4j:3.5.14'//ultima versao 4 da conflito com a lib lucene
-	compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
+	//compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
+	//compile('javax.activation:activation:1.1')
+	//compile('org.glassfish.jaxb:jaxb-runtime:2.3.1')
+	// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.10.1'
+	// https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml
+	compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.10.1'
 }
 
 test {

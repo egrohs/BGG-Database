@@ -1,6 +1,7 @@
 package bgg;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -8,37 +9,62 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+
+import bgg.dominio.Boardgame;
+import bgg.dominio.Boardgamecategory;
+import bgg.dominio.Boardgamedesigner;
+import bgg.dominio.Boardgamemechanic;
+import bgg.dominio.Boardgames;
 
 public class Main {
 	static Boardgames games;
 
 	public static void main(String[] args) {
+		XmlMapper mapper = new XmlMapper();
+		Boardgames bgs;
 		try {
-			File file = new File("bgg.xml");
-			JAXBContext jaxbContext = JAXBContext.newInstance(Boardgames.class);
+			mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
-			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-			games = (Boardgames) jaxbUnmarshaller.unmarshal(file);
-			System.out.println(games.getGames().size());
-			//mechanics();
-			//designers();
-
-		} catch (JAXBException e) {
+			for (int i = 0; i < 100; i++) {
+				File f = new File("databases/" + i + ".xml");
+				if (f.exists()) {
+					bgs = mapper.readValue(f, Boardgames.class);
+					Boardgame bg = bgs.getBoardgame();
+					if (bg.getObjectid() != null) {
+						System.out.println(bg);
+						for (Boardgamemechanic m : bg.getBoardgamemechanic()) {
+							System.out.println(m);
+						}
+						for (Boardgamecategory c : bg.getBoardgamecategory()) {
+							System.out.println(c);
+						}
+					}
+				}
+			}
+		} catch (JsonParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
 	private static void designers() {
 		Map<String, Integer> des = new HashMap<String, Integer>();
 		for (Boardgame game : games.getGames()) {
-			for (Boardgamedesigner m : game.desigs) {
-				if (des.containsKey(m.name)) {
-					des.put(m.name, des.get(m.name) + 1);
+			for (Boardgamedesigner m : game.getDesigs()) {
+				if (des.containsKey(m.getName())) {
+					des.put(m.getName(), des.get(m.getName()) + 1);
 				} else {
-					des.put(m.name, 1);
+					des.put(m.getName(), 1);
 				}
 			}
 		}
@@ -51,11 +77,11 @@ public class Main {
 	private static void mechanics() {
 		Map<String, Integer> mechs = new HashMap<String, Integer>();
 		for (Boardgame game : games.getGames()) {
-			for (Boardgamemechanic m : game.mechs) {
-				if (mechs.containsKey(m.name)) {
-					mechs.put(m.name, mechs.get(m.name) + 1);
+			for (Boardgamemechanic m : game.getMechs()) {
+				if (mechs.containsKey(m.getName())) {
+					mechs.put(m.getName(), mechs.get(m.getName()) + 1);
 				} else {
-					mechs.put(m.name, 1);
+					mechs.put(m.getName(), 1);
 				}
 			}
 		}

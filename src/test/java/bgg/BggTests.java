@@ -2,6 +2,9 @@ package bgg;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +31,7 @@ class BggTests {
 
 	@Test
 	void contextLoads() {
+		System.out.println(bgRepo.findById(10L));
 		List<Boardgame> bgs = load();
 		for (Boardgame bg : bgs) {
 			bgRepo.save(bg);
@@ -42,15 +46,23 @@ class BggTests {
 		try {
 			mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
-			// int i = 10;
-			for (int i = 0; i < 100; i++) {
+			//int i = 10;
+			for (int i = 0; i < 100; i++)
+			{
 				File f = new File("databases/" + i + ".xml");
-				if (f.exists()) {
-					bgs = mapper.readValue(f, Boardgames.class);
+				if (f.exists())
+				{
+					Path path = Paths.get(f.getPath());
+					String xml = Files.readString(path).replaceAll("</?statistics( page=\"\\d+\")?>", "")
+							.replaceAll("</?ratings\\s?>", "");
+					//System.out.println(xml);
+					bgs = mapper.readValue(xml, Boardgames.class);
 					bg = bgs.getBoardgame();
 					if (bg.getObjectid() != null) {
 						lbgs.add(bg);
 						System.out.println(bg);
+						System.out.println(bg.getUsersrated());
+						// System.exit(0);
 						for (Boardgamemechanic m : bg.getBoardgamemechanic()) {
 							System.out.println(m);
 						}

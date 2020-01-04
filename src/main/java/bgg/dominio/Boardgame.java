@@ -31,6 +31,24 @@ public class Boardgame {
 	int age;
 	String description;
 
+	//@JacksonXmlElementWrapper(localName="statistics.ratings")
+	// private List<String> phone;
+	//@JacksonXmlElementWrapper(useWrapping = false)
+	//Statistics statistics;
+	//Ratings ratings;
+	int usersrated;
+	double average;
+	double bayesaverage;
+	double stddev;
+	int median;
+	int owned;
+	int trading;
+	int wanting;
+	int wishing;
+	int numcomments;
+	int numweights;
+	double averageweight;
+
 	@JacksonXmlElementWrapper(useWrapping = false)
 	List<Boardgamehonor> boardgamehonor;
 

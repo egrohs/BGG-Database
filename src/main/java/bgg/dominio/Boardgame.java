@@ -102,8 +102,8 @@ public class Boardgame {
 		boardgamemechanic.addAll(value);
 	}
 
-	//@JacksonXmlElementWrapper(localName = "ranks")
-	@JacksonXmlElementWrapper(useWrapping = false)
+	@JacksonXmlElementWrapper(localName = "ranks")
+	//@JacksonXmlElementWrapper(useWrapping = false)
 	@JacksonXmlProperty(localName = "rank")
 	List<Rank> rank;
 

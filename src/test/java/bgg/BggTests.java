@@ -18,10 +18,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import bgg.dominio.Boardgame;
-import bgg.dominio.Boardgameartist;
-import bgg.dominio.Boardgamecategory;
-import bgg.dominio.Boardgamemechanic;
-import bgg.dominio.Boardgames;
 import bgg.dominio.Rank;
 import bgg.repository.BoardgameRepository;
 
@@ -32,7 +28,7 @@ class BggTests {
 
 	@Test
 	void contextLoads() {
-		//System.out.println(bgRepo.findById(10L));
+		// System.out.println(bgRepo.findById(10L));
 		List<Boardgame> bgs = load();
 		for (Boardgame bg : bgs) {
 			bgRepo.save(bg);
@@ -42,23 +38,21 @@ class BggTests {
 	private List<Boardgame> load() {
 		XmlMapper mapper = new XmlMapper();
 		List<Boardgame> lbgs = new ArrayList<>();
-		Boardgames bgs = null;
 		Boardgame bg = null;
 		try {
 			mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
-			//int i = 10;
-			for (int i = 0; i < 100; i++)
-			{
+			// int i = 10;
+			for (int i = 0; i < 100; i++) {
 				File f = new File("databases/" + i + ".xml");
-				if (f.exists())
-				{
+				if (f.exists()) {
 					Path path = Paths.get(f.getPath());
 					String xml = Files.readString(path).replaceAll("</?statistics( page=\"\\d+\")?>", "")
-							.replaceAll("</?ratings\\s?>", "").replaceAll("</?ranks>", "");
-					//System.out.println(xml);
-					bgs = mapper.readValue(xml, Boardgames.class);
-					bg = bgs.getBoardgame();
+							.replaceAll("</?ratings\\s?>", "")
+							//.replaceAll("</?ranks>", "")
+							.replaceAll("</?boardgames( termsofuse=\"https://boardgamegeek.com/xmlapi/termsofuse\")?>", "");
+					// System.out.println(xml);
+					bg = mapper.readValue(xml, Boardgame.class);
 					if (bg.getObjectid() != null) {
 						lbgs.add(bg);
 						System.out.println(bg);

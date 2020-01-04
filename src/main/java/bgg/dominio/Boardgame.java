@@ -7,6 +7,7 @@ import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 import lombok.Data;
@@ -31,11 +32,11 @@ public class Boardgame {
 	int age;
 	String description;
 
-	//@JacksonXmlElementWrapper(localName="statistics.ratings")
+	// @JacksonXmlElementWrapper(localName="statistics.ratings")
 	// private List<String> phone;
-	//@JacksonXmlElementWrapper(useWrapping = false)
-	//Statistics statistics;
-	//Ratings ratings;
+	// @JacksonXmlElementWrapper(useWrapping = false)
+	// Statistics statistics;
+	// Ratings ratings;
 	int usersrated;
 	double average;
 	double bayesaverage;
@@ -99,5 +100,17 @@ public class Boardgame {
 			boardgamemechanic = new ArrayList<Boardgamemechanic>(value.size());
 		}
 		boardgamemechanic.addAll(value);
+	}
+
+	//@JacksonXmlElementWrapper(localName = "ranks")
+	@JacksonXmlElementWrapper(useWrapping = false)
+	@JacksonXmlProperty(localName = "rank")
+	List<Rank> rank;
+
+	public void setRank(List<Rank> value) {
+		if (rank == null) {
+			rank = new ArrayList<Rank>(value.size());
+		}
+		rank.addAll(value);
 	}
 }

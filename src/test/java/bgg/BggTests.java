@@ -22,6 +22,7 @@ import bgg.dominio.Boardgameartist;
 import bgg.dominio.Boardgamecategory;
 import bgg.dominio.Boardgamemechanic;
 import bgg.dominio.Boardgames;
+import bgg.dominio.Rank;
 import bgg.repository.BoardgameRepository;
 
 @SpringBootTest
@@ -31,7 +32,7 @@ class BggTests {
 
 	@Test
 	void contextLoads() {
-		System.out.println(bgRepo.findById(10L));
+		//System.out.println(bgRepo.findById(10L));
 		List<Boardgame> bgs = load();
 		for (Boardgame bg : bgs) {
 			bgRepo.save(bg);
@@ -54,7 +55,7 @@ class BggTests {
 				{
 					Path path = Paths.get(f.getPath());
 					String xml = Files.readString(path).replaceAll("</?statistics( page=\"\\d+\")?>", "")
-							.replaceAll("</?ratings\\s?>", "");
+							.replaceAll("</?ratings\\s?>", "").replaceAll("</?ranks>", "");
 					//System.out.println(xml);
 					bgs = mapper.readValue(xml, Boardgames.class);
 					bg = bgs.getBoardgame();
@@ -63,13 +64,16 @@ class BggTests {
 						System.out.println(bg);
 						System.out.println(bg.getUsersrated());
 						// System.exit(0);
-						for (Boardgamemechanic m : bg.getBoardgamemechanic()) {
-							System.out.println(m);
-						}
-						for (Boardgamecategory c : bg.getBoardgamecategory()) {
-							System.out.println(c);
-						}
-						for (Boardgameartist c : bg.getBoardgameartist()) {
+//						for (Boardgamemechanic m : bg.getBoardgamemechanic()) {
+//							System.out.println(m);
+//						}
+//						for (Boardgamecategory c : bg.getBoardgamecategory()) {
+//							System.out.println(c);
+//						}
+//						for (Boardgameartist c : bg.getBoardgameartist()) {
+//							System.out.println(c);
+//						}
+						for (Rank c : bg.getRank()) {
 							System.out.println(c);
 						}
 					}
